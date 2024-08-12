@@ -7,10 +7,10 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    'Crackwall.local': typeof import('./src/components/Crackwall.local.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheCanvas: typeof import('./src/components/TheCanvas.vue')['default']
-    TheFooter: typeof import('./src/components/TheFooter.vue')['default']
     ToggleDark: typeof import('./src/components/ToggleDark.vue')['default']
   }
 }
