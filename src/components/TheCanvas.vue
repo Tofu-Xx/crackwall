@@ -1,4 +1,22 @@
 <script setup lang="ts">
+// const color = '#8888'
+// const len = 15 // 40
+// const newLen = [0.8, 1.04] // [0.8,1]
+// const theta = [Math.PI / 2 * 3,Math.PI / 2 * 3] // random(0,Math.PI*2)
+// const newTheta = 0.1 // 1
+// const minimumLen = 0.8 // 10
+// const surviveDepth = 6 // 2
+// const deathRate = 0.6// 0.5
+const color = '#8888'
+const len =  40
+const newLen =  [0.8,1]
+const theta = [0,Math.PI*2] 
+const newTheta = 1
+const minimumLen = 10
+const surviveDepth =  2
+const deathRate =  0.5
+
+
 const cvs = $ref<HTMLCanvasElement>()
 const ctx = $computed(() => cvs!.getContext('2d')!)
 
@@ -15,38 +33,31 @@ function init() {
   const { width: W, height: H } = cvs!.getBoundingClientRect()
   cvs!.width = W
   cvs!.height = H
-  ctx.strokeStyle = '#8888'
+  ctx.strokeStyle = color
 }
 
 function draw(e: MouseEvent) {
   const { offsetX, offsetY } = e
-
-  // 相对于中心点的坐标差值
-  // const dx =  offsetX- cvs!.width/2;
-  // const dy =  offsetY- cvs!.height/2;
-
   const root: Polar = {
     origin: [offsetX, offsetY],
-    r: 15,
-    // theta:  Math.atan2(dy, dx) - Math.PI
-    // theta:random(0,Math.PI*2)
-    theta: Math.PI / 2 * 3,
+    r: len,
+    theta: random(...theta),
   }
   branch(root)
 }
 
 function branch(root: Polar, deepth = 0) {
-  if (root.r < 0.8)
+  if (root.r < minimumLen)
     return
   const end = lineTo(root)
-  if (deepth < 6 || random() < 0.6) {
+  if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * 0.8, root.r * 1.04), theta: random(root.theta, root.theta + 0.1) }, deepth + 1),
+      branch({ origin: end, r: random(root.r * newLen[0], root.r *newLen[1]), theta: random(root.theta, root.theta + newTheta) }, deepth + 1),
     )
   }
-  if (deepth < 6 || random() < 0.6) {
+  if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * 0.8, root.r * 1.04), theta: random(root.theta, root.theta - 0.1) }, deepth + 1),
+      branch({ origin: end, r: random(root.r * newLen[0], root.r *newLen[1]), theta: random(root.theta, root.theta - newTheta) }, deepth + 1),
     )
   }
 }
