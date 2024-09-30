@@ -19,13 +19,6 @@ const deathRate = 0.6// 0.5
 const cvsRef = $(useTemplateRef<HTMLCanvasElement>('cvs'))
 const ctx = $computed(() => cvsRef!.getContext('2d')!)
 
-type Point = [number, number]
-interface Polar {
-  origin: Point
-  r: number
-  theta: number
-}
-
 const tasks: (() => void)[] = $ref([])
 
 function init() {
@@ -34,6 +27,12 @@ function init() {
   cvsRef!.height = H
 }
 
+type Point = [number, number]
+interface Polar {
+  origin: Point
+  r: number
+  theta: number
+}
 function draw(e: MouseEvent) {
   ctx.strokeStyle = color()
   const { offsetX, offsetY } = e
