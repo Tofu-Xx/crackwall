@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const color =()=> `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6,'0')}`
+const color = () => `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padEnd(6, '0')}`
 const len = 15 // 40
 const newLen = [0.8, 1.04] // [0.8,1]
-const theta = [Math.PI / 2 * 3,Math.PI / 2 * 3] // random(0,Math.PI*2)
+const theta = [Math.PI / 2 * 3, Math.PI / 2 * 3] // random(0,Math.PI*2)
 const newTheta = 0.1 // 1
 const minimumLen = 0.8 // 10
 const surviveDepth = 6 // 2
@@ -10,15 +10,14 @@ const deathRate = 0.6// 0.5
 // const color = '#8888'
 // const len =  40
 // const newLen =  [0.8,1]
-// const theta = [0,Math.PI*2] 
+// const theta = [0,Math.PI*2]
 // const newTheta = 1
 // const minimumLen = 10
 // const surviveDepth =  2
 // const deathRate =  0.5
 
-
-const cvs = $ref<HTMLCanvasElement>()
-const ctx = $computed(() => cvs!.getContext('2d')!)
+const cvsRef = $(useTemplateRef<HTMLCanvasElement>('cvs'))
+const ctx = $computed(() => cvsRef!.getContext('2d')!)
 
 type Point = [number, number]
 interface Polar {
@@ -27,17 +26,16 @@ interface Polar {
   theta: number
 }
 
-const tasks: Function[] = $ref([])
+const tasks: (() => void)[] = $ref([])
 
 function init() {
-  const { width: W, height: H } = cvs!.getBoundingClientRect()
-  cvs!.width = W
-  cvs!.height = H
+  const { width: W, height: H } = cvsRef!.getBoundingClientRect()
+  cvsRef!.width = W
+  cvsRef!.height = H
 }
 
 function draw(e: MouseEvent) {
   ctx.strokeStyle = color()
-  console.log(color())
   const { offsetX, offsetY } = e
   const root: Polar = {
     origin: [offsetX, offsetY],
@@ -53,12 +51,12 @@ function branch(root: Polar, deepth = 0) {
   const end = lineTo(root)
   if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * newLen[0], root.r *newLen[1]), theta: random(root.theta, root.theta + newTheta) }, deepth + 1),
+      branch({ origin: end, r: random(root.r * newLen[0], root.r * newLen[1]), theta: random(root.theta, root.theta + newTheta) }, deepth + 1),
     )
   }
   if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * newLen[0], root.r *newLen[1]), theta: random(root.theta, root.theta - newTheta) }, deepth + 1),
+      branch({ origin: end, r: random(root.r * newLen[0], root.r * newLen[1]), theta: random(root.theta, root.theta - newTheta) }, deepth + 1),
     )
   }
 }
@@ -99,5 +97,5 @@ onMounted(init)
 </script>
 
 <template>
-  <canvas ref="cvs" h100vh w100vw bg="gray500 op5" @click="draw" @contextmenu.prevent="ctx.clearRect(0, 0, cvs!.width, cvs!.height);tasks = []" />
+  <canvas ref="cvs" h100vh w100vw bg="gray500 op5" @click="draw" @contextmenu.prevent="ctx.clearRect(0, 0, cvsRef!.width, cvsRef!.height);tasks = []" />
 </template>
