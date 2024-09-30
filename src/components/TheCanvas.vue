@@ -1,20 +1,20 @@
 <script setup lang="ts">
+const color =()=> `#${Math.floor(Math.random() * 0xffffff).toString(16).padEnd(6,'0')}`
+const len = 15 // 40
+const newLen = [0.8, 1.04] // [0.8,1]
+const theta = [Math.PI / 2 * 3,Math.PI / 2 * 3] // random(0,Math.PI*2)
+const newTheta = 0.1 // 1
+const minimumLen = 0.8 // 10
+const surviveDepth = 6 // 2
+const deathRate = 0.6// 0.5
 // const color = '#8888'
-// const len = 15 // 40
-// const newLen = [0.8, 1.04] // [0.8,1]
-// const theta = [Math.PI / 2 * 3,Math.PI / 2 * 3] // random(0,Math.PI*2)
-// const newTheta = 0.1 // 1
-// const minimumLen = 0.8 // 10
-// const surviveDepth = 6 // 2
-// const deathRate = 0.6// 0.5
-const color = '#8888'
-const len =  40
-const newLen =  [0.8,1]
-const theta = [0,Math.PI*2] 
-const newTheta = 1
-const minimumLen = 10
-const surviveDepth =  2
-const deathRate =  0.5
+// const len =  40
+// const newLen =  [0.8,1]
+// const theta = [0,Math.PI*2] 
+// const newTheta = 1
+// const minimumLen = 10
+// const surviveDepth =  2
+// const deathRate =  0.5
 
 
 const cvs = $ref<HTMLCanvasElement>()
@@ -33,10 +33,11 @@ function init() {
   const { width: W, height: H } = cvs!.getBoundingClientRect()
   cvs!.width = W
   cvs!.height = H
-  ctx.strokeStyle = color
 }
 
 function draw(e: MouseEvent) {
+  ctx.strokeStyle = color()
+  console.log(color())
   const { offsetX, offsetY } = e
   const root: Polar = {
     origin: [offsetX, offsetY],
