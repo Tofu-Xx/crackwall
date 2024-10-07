@@ -7,14 +7,14 @@ const newTheta = 0.1 // 1
 const minimumLen = 0.8 // 10
 const surviveDepth = 6 // 2
 const deathRate = 0.6// 0.5
-// const color = '#8888'
-// const len =  40
-// const newLen =  [0.8,1]
-// const theta = [0,Math.PI*2]
+// const color = () => '#8888'
+// const len = 40
+// const newLen = [0.8, 1]
+// const theta = [0, Math.PI * 2]
 // const newTheta = 1
 // const minimumLen = 10
-// const surviveDepth =  2
-// const deathRate =  0.5
+// const surviveDepth = 2
+// const deathRate = 0.5
 
 const cvsRef = $(useTemplateRef<HTMLCanvasElement>('cvs'))
 const ctx = $computed(() => cvsRef!.getContext('2d')!)
