@@ -32,30 +32,34 @@ interface Polar {
   origin: Point
   r: number
   theta: number
+  color: string
 }
 function draw(e: MouseEvent) {
-  ctx.strokeStyle = color()
+  // ctx.strokeStyle = color()
   const { offsetX, offsetY } = e
   const root: Polar = {
     origin: [offsetX, offsetY],
     r: len,
     theta: random(...theta),
+    color: color(),
   }
   branch(root)
 }
 
 function branch(root: Polar, deepth = 0) {
-  if (root.r < minimumLen)
+  const { r, theta, color } = root
+  ctx.strokeStyle = color
+  if (r < minimumLen)
     return
   const end = lineTo(root)
   if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * newLen[0], root.r * newLen[1]), theta: random(root.theta, root.theta + newTheta) }, deepth + 1),
+      branch({ color, origin: end, r: random(r * newLen[0], r * newLen[1]), theta: random(theta, theta + newTheta) }, deepth + 1),
     )
   }
   if (deepth < surviveDepth || random() < deathRate) {
     tasks.push(() =>
-      branch({ origin: end, r: random(root.r * newLen[0], root.r * newLen[1]), theta: random(root.theta, root.theta - newTheta) }, deepth + 1),
+      branch({ color, origin: end, r: random(r * newLen[0], r * newLen[1]), theta: random(theta, theta - newTheta) }, deepth + 1),
     )
   }
 }
