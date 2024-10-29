@@ -1,5 +1,4 @@
 {
-  "name": "crackwall",
   "type": "module",
   "packageManager": "pnpm@9.12.3",
   "scripts": {
