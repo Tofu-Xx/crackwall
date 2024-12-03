@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const color = () => `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padEnd(6, '0')}`
+const color = () => `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`
 const len = 15 // 40
 const newLen = [0.8, 1.04] // [0.8,1]
 const theta = [Math.PI / 2 * 3, Math.PI / 2 * 3] // random(0,Math.PI*2)
