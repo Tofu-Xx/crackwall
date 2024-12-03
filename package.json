@@ -6,7 +6,6 @@
     "dev": "vite --port 3333 --open",
     "typecheck": "vue-tsc ",
     "preview": "vite preview",
-    "test": "vitest",
     "up": "taze major -I",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
