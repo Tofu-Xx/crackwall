@@ -1,12 +1,13 @@
 <script setup lang="ts">
 const color = () => `#${Math.floor(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}`
-const len = 15 // 40
-const newLen = [0.8, 1.04] // [0.8,1]
-const theta = [Math.PI / 2 * 3, Math.PI / 2 * 3] // random(0,Math.PI*2)
-const newTheta = 0.1 // 1
-const minimumLen = 0.8 // 10
-const surviveDepth = 6 // 2
-const deathRate = 0.6// 0.5
+const len = 15 
+const newLen = [0.8, 1.04] 
+const theta = [Math.PI / 2 * 3, Math.PI / 2 * 3] 
+const newTheta = 0.1 
+const minimumLen = 0.8 
+const surviveDepth = 6 
+const deathRate = 0.6
+
 // const color = () => '#8888'
 // const len = 40
 // const newLen = [0.8, 1]
@@ -35,7 +36,6 @@ interface Polar {
   color: string
 }
 function draw(e: MouseEvent) {
-  // ctx.strokeStyle = color()
   const { offsetX, offsetY } = e
   const root: Polar = {
     origin: [offsetX, offsetY],
@@ -71,7 +71,7 @@ function frame() {
 }
 
 (function loop(deepth = 0) {
-  window.requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
     if (deepth % 3 === 0)
       frame()
     loop(deepth + 1)
